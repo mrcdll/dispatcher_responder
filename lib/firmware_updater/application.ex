@@ -1,12 +1,17 @@
 defmodule FirmwareUpdater.Application do
   use Application
 
+  @spec start(any, any) :: :ignore | {:error, any} | {:ok, pid}
   def start(_type, _args) do
     children = [
       FirmwareUpdaterWeb.Endpoint,
       %{
         id: FirmwareUpdater.Queue,
         start: {FirmwareUpdater.Queue, :start_link, [[]]}
+      },
+      %{
+        id: FirmwareUpdater.DeviceHub,
+        start: {FirmwareUpdater.DeviceHub, :start_link, []}
       },
       FirmwareUpdater.GenStage.QueueFetcher,
       FirmwareUpdater.GenStage.KafkaDispatcherSupervsior
@@ -18,6 +23,7 @@ defmodule FirmwareUpdater.Application do
     Supervisor.start_link(children, opts)
   end
 
+  @spec config_change(any, any, any) :: :ok
   def config_change(changed, _new, removed) do
     FirmwareUpdaterWeb.Endpoint.config_change(changed, removed)
     :ok

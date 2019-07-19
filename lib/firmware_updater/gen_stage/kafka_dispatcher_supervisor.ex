@@ -1,6 +1,7 @@
 defmodule FirmwareUpdater.GenStage.KafkaDispatcherSupervsior do
   use ConsumerSupervisor
 
+  @spec start_link(any) :: :ignore | {:error, any} | {:ok, pid}
   def start_link(args) do
     ConsumerSupervisor.start_link(__MODULE__, args)
   end

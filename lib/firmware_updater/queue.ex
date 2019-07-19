@@ -8,7 +8,6 @@ defmodule FirmwareUpdater.Queue do
 
   @spec push(atom | pid | {atom, any} | {:via, atom, any}, any) :: :ok
   def push(pid, message) do
-    IO.puts(pid)
     GenServer.cast(pid, {:push, message})
   end
 
