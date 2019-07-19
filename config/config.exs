@@ -12,7 +12,13 @@ config :firmware_updater, FirmwareUpdaterWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "haKv8P2vr3Tl9XXtc16vnsiqw8+HvFZja0vkM8R0TVB591Lnff/8Fv9CpoBBcSfu",
   render_errors: [view: FirmwareUpdaterWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: FirmwareUpdater.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: FirmwareUpdater.PubSub, adapter: Phoenix.PubSub.PG2],
+  live_view: [signing_salt: "a4JMlKVQIKvBNSMnxEGKC2BfuH4D8x9hQBESgLxOFX48ZF5E641bccYXtQE9vho8"],
+  live_reload: [
+    patterns: [
+      ~r{lib/firmware_updater_web/live/.*(ex)$}
+    ]
+  ]
 
 # Configures Elixir's Logger
 config :logger, :console,

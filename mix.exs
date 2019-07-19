@@ -38,7 +38,10 @@ defmodule FirmwareUpdater.MixProject do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:phoenix_live_view, github: "phoenixframework/phoenix_live_view"},
+      {:faker, "~> 0.12"},
+      {:gen_stage, "~> 0.14.2"}
     ]
   end
 end
