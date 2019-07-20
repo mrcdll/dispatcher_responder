@@ -6,6 +6,10 @@ defmodule FirmwareUpdater.Application do
     children = [
       FirmwareUpdaterWeb.Endpoint,
       %{
+        id: FirmwareUpdater.ServerState,
+        start: {FirmwareUpdater.ServerState, :start_link, []}
+      },
+      %{
         id: FirmwareUpdater.Queue,
         start: {FirmwareUpdater.Queue, :start_link, [[]]}
       },

@@ -7,8 +7,20 @@ defmodule FirmwareUpdater.DeviceHub do
     GenServer.start_link(__MODULE__, %{}, name: DefaultHub)
   end
 
-  def subscribe(device_name) do
+  def subscribe_client(device_name) do
     Phoenix.PubSub.subscribe(FirmwareUpdater.PubSub, @topic <> "#{device_name}")
+  end
+
+  def subscribe_to_server() do
+    Phoenix.PubSub.subscribe(FirmwareUpdater.PubSub, @topic <> "server")
+  end
+
+  def notify_dispatch() do
+    Phoenix.PubSub.broadcast(
+      FirmwareUpdater.PubSub,
+      @topic <> "server",
+      {__MODULE__, :dispatched}
+    )
   end
 
   def messages_sent(pid, device_name) do

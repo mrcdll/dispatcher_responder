@@ -11,6 +11,14 @@
   </div>
   <div class="server">
     <h1>HW Server<h1>
+    <%= Enum.map(@server_state, fn dispatch -> %>
+      <div class="dispatch">
+        <h4>Process: <%= inspect dispatch.pid %></h4>
+        <h4>Device: <%= dispatch.message.device_name %></h4>
+        <h4>Message: <%= dispatch.message.payload %></h4>
+        <h4>Time: <%= dispatch.time %></h4>
+      </div>
+    <% end) %>
   </div>
 </div>
 

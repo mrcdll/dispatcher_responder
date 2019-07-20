@@ -24,7 +24,6 @@ defmodule FirmwareUpdater.GenStage.QueueFetcher do
     {:noreply, messages, new_total_needed}
   end
 
-  @spec handle_info(:poll_for_more_messages, number) :: {:noreply, any, number}
   def handle_info(:poll_for_more_messages, total_needed) do
     messages = FirmwareUpdater.Queue.fetch(DefaultQueue)
     new_total_needed = total_needed - Enum.count(messages)

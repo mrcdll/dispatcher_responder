@@ -24,11 +24,11 @@ defmodule FirmwareUpdater.Queue do
   end
 
   def handle_call(:fetch, _from, queue) do
-    messages =
-      MapSet.new(queue)
-      |> Enum.take(5)
+    {messages, updated_queue} =
+      queue
+      |> Enum.split(5)
 
-    {:reply, messages, queue}
+    {:reply, messages, updated_queue}
   end
 
   def handle_cast({:push, message}, queue) do
