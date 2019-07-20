@@ -6,7 +6,7 @@
 
     <h4>You just opened a stateful connection with the server!<h4>
     <br>
-    <button phx-click="send_random_message">Dispatch Food</button>
+    <button phx-click="send_random_message">Send Message</button>
     You sent <%= @messages_sent %> messages
     <%= Enum.map(@firmware_updates, fn update -> %>
       <div class="firmware_updates">

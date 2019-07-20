@@ -6,12 +6,11 @@ defmodule FirmwareUpdater.DeviceHub do
     GenServer.start_link(__MODULE__, %{}, name: DefaultHub)
   end
 
-  def subscribe_client(device_name) do
-    Phoenix.PubSub.subscribe(FirmwareUpdater.PubSub, @topic <> "#{device_name}")
-  end
-
   def subscribe_to_server() do
     Phoenix.PubSub.subscribe(FirmwareUpdater.PubSub, @topic <> "server")
+  end
+
+  def fetch_latest_firmware_update do
   end
 
   def notify_dispatch() do
@@ -48,7 +47,6 @@ defmodule FirmwareUpdater.DeviceHub do
 
   # Server (callbacks)
 
-  @spec init(any) :: {:ok, any}
   def init(state) do
     {:ok, state}
   end

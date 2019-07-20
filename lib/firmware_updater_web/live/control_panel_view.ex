@@ -10,17 +10,14 @@ defmodule FirmwareUpdaterWeb.ControlPanelView do
     device_name = session.device_name
 
     if connected?(socket) do
-      DeviceHub.subscribe_client(device_name)
       DeviceHub.subscribe_to_server()
     end
-
-    messages_sent = DeviceHub.messages_sent(DefaultHub, device_name)
 
     {:ok,
      assign(socket, %{
        device_name: device_name,
-       messages_sent: messages_sent,
-       server_state: [],
+       messages_sent: DeviceHub.messages_sent(DefaultHub, device_name),
+       server_state: FirmwareUpdater.ServerState.fetch(DefaultServerState),
        firmware_updates: []
      })}
   end
@@ -47,11 +44,6 @@ defmodule FirmwareUpdaterWeb.ControlPanelView do
     {:noreply, assign(socket, %{})}
   end
 
-  @spec handle_info(
-          {FirmwareUpdater.DeviceHub, :dispatched}
-          | {FirmwareUpdater.DeviceHub, :firmware_update, any},
-          Phoenix.LiveView.Socket.t()
-        ) :: {:noreply, any}
   def handle_info({FirmwareUpdater.DeviceHub, :dispatched}, socket) do
     server_state = FirmwareUpdater.ServerState.fetch(DefaultServerState)
     {:noreply, assign(socket, server_state: server_state)}
