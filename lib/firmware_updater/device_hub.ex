@@ -23,6 +23,22 @@ defmodule FirmwareUpdater.DeviceHub do
     )
   end
 
+  def notify_firmware_update() do
+    update_type = ["critical", "bug fix", "security"]
+
+    update = %{
+      firmware_version: Faker.UUID.v4(),
+      type: Enum.random(update_type),
+      time: NaiveDateTime.utc_now()
+    }
+
+    Phoenix.PubSub.broadcast(
+      FirmwareUpdater.PubSub,
+      @topic <> "server",
+      {__MODULE__, :firmware_update, update}
+    )
+  end
+
   def messages_sent(pid, device_name) do
     GenServer.call(pid, {:messages_sent, device_name})
   end

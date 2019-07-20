@@ -8,9 +8,17 @@
     <br>
     <button phx-click="send_random_message">Dispatch Food</button>
     You sent <%= @messages_sent %> messages
+    <%= Enum.map(@firmware_updates, fn update -> %>
+      <div class="firmware_updates">
+        <h4>Firmware_version: <%= update.firmware_version %></h4>
+        <h4>Type: <%= update.type %></h4>
+        <h4>Date: <%= update.time %></h4>
+      </div>
+    <% end) %>
   </div>
   <div class="server">
     <h1>HW Server<h1>
+    <button phx-click="firmware_update">Update Devices</button>
     <%= Enum.map(@server_state, fn dispatch -> %>
       <div class="dispatch">
         <h4>Process: <%= inspect dispatch.pid %></h4>
@@ -21,4 +29,3 @@
     <% end) %>
   </div>
 </div>
-
